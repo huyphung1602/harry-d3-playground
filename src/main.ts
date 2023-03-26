@@ -1,6 +1,5 @@
-import MonacoEditor from './MonacoEditor.vue'
+import { createApp } from 'vue'
+import './style.css'
+import App from './App.vue'
 
-MonacoEditor.install = (app) => {
-    app.component(MonacoEditor.name, MonacoEditor)
-}
-export default MonacoEditor
+createApp(App).mount('#app')
