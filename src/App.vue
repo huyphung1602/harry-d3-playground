@@ -20,11 +20,7 @@
       <div
         class="basis-1/2 border rounded-md shadow ml-4 p-8"
       >
-        <div id="d3-customized-content">
-        <component :is="'script'">
-          {{ playgroundCode }}
-        </component>
-        </div>
+        <D3Result :user-script="userScript" />
       </div>
     </div>
   </div>
@@ -33,8 +29,9 @@
 <script setup lang="ts">
 import MonacoEditor from 'monaco-editor-vue3';
 import * as monaco from 'monaco-editor';
+import D3Result from './components/D3Result.vue';
 import nightOwl from 'monaco-themes/themes/Night Owl.json';
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 
 monaco.editor.defineTheme('nightOwl', nightOwl as monaco.editor.IStandaloneThemeData );
 const options = {
@@ -43,10 +40,9 @@ const options = {
   tabSize: 2,
 };
 const playgroundCode = ref('');
+const userScript = ref('');
 const applyScript = (scriptCode : string) : void => {
-  console.log(scriptCode);
-  const result = eval(scriptCode);
-  console.log(result);
+  userScript.value = scriptCode;
 };
 </script>
 
