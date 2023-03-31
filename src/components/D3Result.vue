@@ -10,8 +10,12 @@ const props = defineProps({
   userScript: { type: String, default: '' },
 })
 const applyD3 = (d3 : any) => {
-  d3.select("#d3-content").html(null);
-  eval(props.userScript);
+  try {
+    d3.select("#d3-content").html(null);
+    eval(props.userScript);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 onUpdated(() => {
