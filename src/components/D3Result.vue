@@ -1,5 +1,5 @@
 <template>
-  <div id="d3-content" />
+  <div class="d3-content" />
 </template>
 
 <script setup lang="ts">
@@ -11,7 +11,7 @@ const props = defineProps({
 })
 const applyD3 = (d3 : any) => {
   try {
-    d3.select("#d3-content").html(null);
+    d3.select(".d3-content").html(null);
     eval(props.userScript);
   } catch (error) {
     console.log(error);
