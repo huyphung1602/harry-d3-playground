@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto 20px xl:px-16 md:px-12 sm:px-8 md:py-10 h-screen">
+  <div class="px-16 md:px-12 sm:px-8 md:py-10 h-screen">
     <p class="text-2xl py-4">D3 Playground</p>
     <button
       class="bg-violet-500 hover:bg-violet-600 focus:outline-none focus:ring focus:ring-violet-300 active:bg-violet-700 px-5 py-2 text-sm leading-5 rounded-md font-semibold text-white my-4"
