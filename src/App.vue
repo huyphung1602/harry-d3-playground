@@ -1,24 +1,24 @@
 <template>
-  <div class="container mx-auto">
-    <p class="text-2xl py-8">D3 Playground</p>
+  <div class="container mx-auto 20px xl:px-16 md:px-12 sm:px-8 md:py-10 h-screen">
+    <p class="text-2xl py-4">D3 Playground</p>
     <button
       class="bg-violet-500 hover:bg-violet-600 focus:outline-none focus:ring focus:ring-violet-300 active:bg-violet-700 px-5 py-2 text-sm leading-5 rounded-md font-semibold text-white my-4"
       @click="applyScript(playgroundCode)"
     >
       Run
     </button>
-    <div class="flex flex-row">
-      <div class="basis-1/2">
+    <div class="flex justify-between h-3/4 mb-8">
+      <div class="flex-auto w-32">
         <MonacoEditor
           theme="nightOwl"
           :options="options"
           language="javascript"
-          :height="900"
           v-model:value="playgroundCode"
         />
       </div>
+      <div class="flex-none w-12"></div>
       <div
-        class="basis-1/2 border rounded-md shadow ml-4 p-8"
+        class="flex-auto w-32 border rounded-md shadow p-8"
       >
         <D3Result :user-script="userScript" />
       </div>
@@ -38,6 +38,7 @@ const options = {
   colorDecorators: true,
   lineHeight: 24,
   tabSize: 2,
+  automaticLayout: 20,
 };
 const playgroundCode = ref('');
 const userScript = ref('');
