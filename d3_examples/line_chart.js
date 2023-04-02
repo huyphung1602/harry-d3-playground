@@ -1,6 +1,6 @@
-const MARGIN = { top: 20, right: 20, bottom: 60, left: 80};
-const SVG_WIDTH = 700;
-const SVG_HEIGHT = 700;
+const MARGIN = { top: 20, right: 20, bottom: 80, left: 80};
+const SVG_WIDTH = 500;
+const SVG_HEIGHT = 400;
 
 const CHART_WIDTH = SVG_WIDTH - MARGIN.left - MARGIN.right;
 const CHART_HEIGHT = SVG_HEIGHT - MARGIN.top - MARGIN.bottom;
@@ -41,7 +41,7 @@ const yscale = d3.scaleLinear()
   .range([CHART_HEIGHT, 0]);
 
 const chart = svg.append('g')
-  .attr('transform', `translate(${MARGIN.left}, ${MARGIN.top}`)
+  .attr('transform', `translate(${MARGIN.left}, ${MARGIN.top})`)
   .attr('width', CHART_WIDTH)
   .attr('height', CHART_HEIGHT);
 
@@ -55,12 +55,12 @@ chart.append('g')
 // Draw x-axis label
 svg.append('text')
    .text('Month')          
-   .attr('transform', 'translate(350,680)');
+   .attr('transform', `translate(${SVG_WIDTH/2}, ${CHART_HEIGHT + 60})`);
 
 // Draw y-axis label
 svg.append('text')
    .text('Number of patients')
-   .attr('transform', 'translate(40,400) rotate(-90)');   
+   .attr('transform', `translate(${MARGIN.left/2}, ${SVG_HEIGHT/2 + 50}) rotate(-90)`);
 
 const generator = d3.line()
                     .x(d => { return xscale(d.date); })
