@@ -1,18 +1,29 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es6", "dom", "es2020"],
     "module": "ESNext",
-    "moduleResolution": "Node",
-    "strict": true,
+    "moduleResolution": "node",
     "jsx": "preserve",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
+    "baseUrl": ".",
+    "sourceMap": true,
+    "target": "ESNext",
+    "noEmit": true,
     "esModuleInterop": true,
-    "lib": ["ESNext", "DOM", "ES2020"],
-    "skipLibCheck": true,
-    "noEmit": true
+    "downlevelIteration": true,
+    "types": ["vite/client"],
+    "strict": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": [
+    "**/*.test.ts",
+    "node_modules",
+    "vendor",
+    "public"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

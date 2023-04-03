@@ -3,18 +3,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, toRefs } from 'vue';
+import { defineComponent, computed, toRefs, StyleValue, ref } from 'vue';
 import * as monaco from 'monaco-editor';
 import nightOwl from 'monaco-themes/themes/Night Owl.json';
 
 export default defineComponent({
   name: 'MonacoEditor',
   props: {
-    diffEditor: { type: Boolean, default: false },
     width: { type: [String, Number], default: '100%' },
     height: { type: [String, Number], default: '100%' },
-    original: String,
-    value: String,
+    original: { String, default: '' },
+    value: { String, default: '' },
     language: { type: String, default: 'javascript' },
     theme: { type: String, default: 'vs' },
     options: {
@@ -38,10 +37,12 @@ export default defineComponent({
         width: fixedWidth,
         height: fixedHeight,
         'text-align': 'left',
-      }
+      } as StyleValue
     })
+    const editor = null as unknown as monaco.editor.IStandaloneCodeEditor;
     return {
       style,
+      editor,
     }
   },
   mounted() {
@@ -55,17 +56,14 @@ export default defineComponent({
       this.$emit('editorWillMount', monaco)
       monaco.editor.defineTheme('nightOwl', nightOwl as monaco.editor.IStandaloneThemeData );
       const { value, language, theme, options } = this
-      this.editor = monaco.editor[
-        this.diffEditor ? 'createDiffEditor' : 'create'
-      ](this.$el, {
+      this.editor = monaco.editor.create(this.$el, {
         value: value,
         language: language,
         theme: theme,
         ...options,
-      })
-      this.diffEditor && this._setModel(this.value, this.original)
+      });
+      const editor = this._getEditor();
       // @event `change`
-      const editor = this._getEditor()
       editor &&
         editor.onDidChangeModelContent((event) => {
           const value = editor.getValue()
@@ -73,19 +71,10 @@ export default defineComponent({
             this.$emit('change', value, event)
             this.$emit('update:value', value)
           }
-        })
-      this.$emit('editorDidMount', this.editor)
+        });
+      this.$emit('editorDidMount', this.editor);
     },
-    _setModel(value, original) {
-      const { language } = this
-      const originalModel = monaco.editor.createModel(original, language)
-      const modifiedModel = monaco.editor.createModel(value, language)
-      this.editor.setModel({
-        original: originalModel,
-        modified: modifiedModel,
-      })
-    },
-    _setValue(value) {
+    _setValue(value: string) {
       let editor = this._getEditor()
       if (editor) return editor.setValue(value)
     },
@@ -96,10 +85,10 @@ export default defineComponent({
     },
     _getEditor() {
       if (!this.editor) return null
-      return this.diffEditor ? this.editor.modifiedEditor : this.editor
+      return this.editor
     },
     _setOriginal() {
-      const { original } = this.editor.getModel()
+      const original = this.editor.getModel() as monaco.editor.ITextModel;
       original.setValue(this.original)
     },
   },
@@ -118,12 +107,7 @@ export default defineComponent({
     },
     language() {
       if (!this.editor) return
-      if (this.diffEditor) {
-        const { original, modified } = this.editor.getModel()
-        monaco.editor.setModelLanguage(original, this.language)
-        monaco.editor.setModelLanguage(modified, this.language)
-      } else
-        monaco.editor.setModelLanguage(this.editor.getModel(), this.language)
+      monaco.editor.setModelLanguage(this.editor.getModel() as monaco.editor.ITextModel, this.language);
     },
     theme() {
       monaco.editor.setTheme(this.theme)
