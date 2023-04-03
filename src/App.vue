@@ -27,13 +27,10 @@
 </template>
 
 <script setup lang="ts">
-import MonacoEditor from 'monaco-editor-vue3';
-import * as monaco from 'monaco-editor';
 import D3Result from './components/D3Result.vue';
-import nightOwl from 'monaco-themes/themes/Night Owl.json';
-import { ref } from 'vue'
+import MonacoEditor from './components/MonacoEditor.vue';
+import { ref } from 'vue';
 
-monaco.editor.defineTheme('nightOwl', nightOwl as monaco.editor.IStandaloneThemeData );
 const options = {
   colorDecorators: true,
   lineHeight: 24,
