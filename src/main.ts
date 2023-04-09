@@ -15,7 +15,8 @@ import monacoHtmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?wor
 import monacoTsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
 import monacoEditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
 
-const isDev = import.meta.env.MODE === 'development';
+// const isDev = import.meta.env.MODE === 'development';
+const isDev = false;
 self.MonacoEnvironment = {
   getWorker: function (workerId, label) {
     console.debug(`* lazy imported Monaco Editor worker id '${workerId}', label '${label}'`)
