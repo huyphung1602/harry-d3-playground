@@ -18,7 +18,7 @@
       </div>
       <div class="flex-none w-12"></div>
       <div
-        class="flex-auto w-32 border rounded-md shadow p-8"
+        class="box-content flex-auto w-32 border rounded-md shadow p-8"
       >
         <D3Result :user-script="userScript" />
       </div>

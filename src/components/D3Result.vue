@@ -1,5 +1,5 @@
 <template>
-  <div class="d3-content" />
+  <div class="d3-content h-full" />
 </template>
 
 <script setup lang="ts">
