@@ -13,9 +13,9 @@ const props = defineProps({
   userScript: { type: String, default: '' },
   userHtml: { type: String, default: '' },
 })
-const applyD3 = (d3 : any) => {
+const applyD3 = (d3 : any, html : string) => {
   try {
-    // d3.select(".html-wrapper").html(null);
+    d3.select(".d3-content").html(html);
     eval(props.userScript);
   } catch (error) {
     console.log(error);
@@ -23,6 +23,6 @@ const applyD3 = (d3 : any) => {
 }
 
 onUpdated(() => {
-  applyD3(d3);
+  applyD3(d3, props.userHtml);
 })
 </script>
