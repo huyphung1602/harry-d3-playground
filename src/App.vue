@@ -42,7 +42,7 @@
       <div
         class="box-content flex-auto w-32 border rounded-md shadow p-8"
       >
-        <D3Result :user-script="userScript" :user-html="userHtml" />
+        <D3Result :user-script="userScript" :user-html="userHtml" :last-run="currentTime"/>
       </div>
     </div>
   </div>
@@ -64,12 +64,14 @@ const monacoHtml = ref('<div></div>');
 const monacoScript = ref('const d3Content = d3.select(\'.d3-content\');');
 const userScript = ref('const d3Content = d3.select(\'.d3-content\');');
 const userHtml = ref('<div></div>');
+const currentTime = ref(Date.now());
 const switchToCodeEditor = (newEditorType : string) : void => {
   editorType.value = newEditorType;
 }
 const applyScript = (scriptCode : string, htmlCode : string) : void => {
   userScript.value = scriptCode;
   userHtml.value = htmlCode;
+  currentTime.value = Date.now();
 };
 </script>
 

@@ -12,6 +12,7 @@ import { onUpdated } from 'vue';
 const props = defineProps({
   userScript: { type: String, default: '' },
   userHtml: { type: String, default: '' },
+  lastRun: { type: Number, default: 0 },
 })
 const applyD3 = (d3 : any, html : string) => {
   try {
