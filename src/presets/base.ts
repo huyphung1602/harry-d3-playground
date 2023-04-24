@@ -1,8 +1,6 @@
 import { Preset } from '../types/preset';
 
-const html = `
-<div></div>
-`;
+const html = '';
 
 const script = `
 const d3Content = d3.select('.d3-content');

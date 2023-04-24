@@ -1,8 +1,6 @@
 import { Preset } from '../types/preset';
 
-const html = `
-<div></div>
-`;
+const html = '';
 
 const script = `
 d3.csv('src/data/1.csv', d => {
