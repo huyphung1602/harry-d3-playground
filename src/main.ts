@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import './style.css';
+import 'flowbite';
 import App from './App.vue';
 
 import 'monaco-editor/esm/vs/editor/standalone/browser/accessibilityHelp/accessibilityHelp';
