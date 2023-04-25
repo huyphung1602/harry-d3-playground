@@ -4,7 +4,8 @@ import { selection } from './selection';
 import { scale } from './scale';
 import { axes } from './axes';
 import { transition } from './transition';
-import { barChart } from './bar_chart';
+import { barChart } from './barChart';
+import { barChartWithTransition } from './barChartWithTransition';
 
 export const presets : Preset[] = [
   base,
@@ -13,4 +14,5 @@ export const presets : Preset[] = [
   axes,
   transition,
   barChart,
+  barChartWithTransition
 ];
