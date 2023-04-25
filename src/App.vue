@@ -127,13 +127,13 @@ const dropDownOptions : DropdownOptions = {
   offsetDistance: 10,
   delay: 300,
   onHide: () => {
-    console.log('dropdown has been hidden');
+    // console.log('dropdown has been hidden');
   },
   onShow: () => {
-    console.log('dropdown has been shown');
+    // console.log('dropdown has been shown');
   },
   onToggle: () => {
-    console.log('dropdown has been toggled');
+    // console.log('dropdown has been toggled');
   }
 };
 const applyPreset = (preset : Preset) : void => {
