@@ -3,22 +3,6 @@ import { Preset } from '../types/preset';
 const html = '';
 
 const script = `
-d3.csv('src/data/1.csv', d => {
-  return {
-    technology: d.technology,
-    count: +d.count
-  };
-}).then(data => {
-  console.log(data.length); // => 33
-  console.log(d3.max(data, d => d.count)); // => 1078
-  console.log(d3.min(data, d => d.count)); // => 20
-  console.log(d3.extent(data, d => d.count)); // => [20, 1078]
- 
-  data.sort((a, b) => b.count - a.count);
- 
-  createViz(data);
-});
-
 const createViz = (myData) => {
   const svgWidth = 600;
   const svgHeight = 700;
@@ -75,6 +59,166 @@ const createViz = (myData) => {
       .attr('y2', svgHeight)
       .attr('stroke', 'black');
 };
+
+// CSV Data: Only work at localhost
+// d3.csv('src/data/1.csv', d => {
+//   return {
+//     technology: d.technology,
+//     count: +d.count
+//   };
+// }).then(data => {
+//   console.log(data.length); // => 33
+//   console.log(d3.max(data, d => d.count)); // => 1078
+//   console.log(d3.min(data, d => d.count)); // => 20
+//   console.log(d3.extent(data, d => d.count)); // => [20, 1078]
+ 
+//   data.sort((a, b) => b.count - a.count);
+ 
+//   createViz(data);
+// });
+
+// JSON data
+const data = [
+  {
+    "technology": "ArcGIS",
+    "count": 147
+  },
+  {
+    "technology": "D3.js",
+    "count": 414
+  },
+  {
+    "technology": "Angular",
+    "count": 20
+  },
+  {
+    "technology": "Datawrapper",
+    "count": 171
+  },
+  {
+    "technology": "Excel",
+    "count": 1078
+  },
+  {
+    "technology": "Flourish",
+    "count": 198
+  },
+  {
+    "technology": "ggplot2",
+    "count": 435
+  },
+  {
+    "technology": "Gephi",
+    "count": 71
+  },
+  {
+    "technology": "Google Data Studio",
+    "count": 176
+  },
+  {
+    "technology": "Highcharts",
+    "count": 58
+  },
+  {
+    "technology": "Illustrator",
+    "count": 426
+  },
+  {
+    "technology": "Java",
+    "count": 29
+  },
+  {
+    "technology": "Leaflet",
+    "count": 134
+  },
+  {
+    "technology": "Mapbox",
+    "count": 167
+  },
+  {
+    "technology": "kepler.gl",
+    "count": 24
+  },
+  {
+    "technology": "Observable",
+    "count": 157
+  },
+  {
+    "technology": "Plotly",
+    "count": 223
+  },
+  {
+    "technology": "Power BI",
+    "count": 460
+  },
+  {
+    "technology": "PowerPoint",
+    "count": 681
+  },
+  {
+    "technology": "Python",
+    "count": 530
+  },
+  {
+    "technology": "QGIS",
+    "count": 193
+  },
+  {
+    "technology": "Qlik",
+    "count": 61
+  },
+  {
+    "technology": "R",
+    "count": 561
+  },
+  {
+    "technology": "React",
+    "count": 145
+  },
+  {
+    "technology": "Tableau",
+    "count": 852
+  },
+  {
+    "technology": "Vega",
+    "count": 48
+  },
+  {
+    "technology": "Vue",
+    "count": 51
+  },
+  {
+    "technology": "Web Components",
+    "count": 79
+  },
+  {
+    "technology": "WebGL",
+    "count": 65
+  },
+  {
+    "technology": "Pen & paper",
+    "count": 522
+  },
+  {
+    "technology": "Physical materials",
+    "count": 69
+  },
+  {
+    "technology": "Canvas",
+    "count": 121
+  },
+  {
+    "technology": "P5/Processing",
+    "count": 55
+  }
+]
+
+console.log(data.length); // => 33
+console.log(d3.max(data, d => d.count)); // => 1078
+console.log(d3.min(data, d => d.count)); // => 20
+console.log(d3.extent(data, d => d.count)); // => [20, 1078]
+data.sort((a, b) => b.count - a.count);
+createViz(data);
 `;
 
 export const barChart : Preset = {
