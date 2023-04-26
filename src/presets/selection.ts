@@ -7,8 +7,12 @@ const html =`
 `;
 
 const script = `
-const d3Content = d3.select('.d3-content');
-d3Content.selectAll('div').append('p').text('Hello World');
+const selection = d3.select('.d3-content');
+
+selection
+  .selectAll('div')
+  .append('p')
+  .text('Hello World');
 `;
 
 export const selection : Preset = {
