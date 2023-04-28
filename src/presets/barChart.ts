@@ -2,178 +2,23 @@ import { Preset } from '../types/preset';
 
 const html = '';
 
-const script = `
-const createViz = (myData) => {
-  const svgWidth = 600;
-  const svgHeight = 700;
-  const selection = d3
-    .select('.d3-content');
-  const svg = selection
-    .append('svg')
-    .attr('viewBox', \`0 0 \${svgWidth} \${svgHeight}\`);
-  const defaultColor = '#39B5E0';
-  const xScale = d3.scaleLinear()
-    .domain(d3.extent(myData, d => d.count))
-    .range([0, 450]);
-  const yScale = d3.scaleBand()
-    .domain(myData.map(d => d.technology))
-    .range([0, svgHeight])
-    .paddingInner(0.2);
-
-  const barAndLabel = svg
-    .selectAll('g')
-      .data(myData)
-      .join('g')
-      .attr('transform', d => \`translate(0, \${yScale(d.technology)})\`);
-
-  barAndLabel
-    .append("rect")
-      .attr("width", d => xScale(d.count))
-      .attr("height", yScale.bandwidth())
-      .attr("x", 100)
-      .attr("y", 0)
-      .attr("fill", d => d.technology === 'D3.js' ? 'yellowgreen': defaultColor);
-
-  barAndLabel
-    .append('text')
-      .text(d => d.technology)
-      .attr('x', 96)
-      .attr('y', 12)
-      .attr('text-anchor', 'end')
-      .style('font-family', 'sans-serif')
-      .style('font-size', '11px');
-
-  barAndLabel
-    .append('text')
-      .text(d => d.count)
-      .attr('x', d => 100 + xScale(d.count) + 4)
-      .attr('y', 12)
-      .style('font-family', 'sans-serif')
-      .style('font-size', '9px');
-
-  svg
-    .append('line')
-      .attr('x1', 100)
-      .attr('y1', 0)
-      .attr('x2', 100)
-      .attr('y2', svgHeight)
-      .attr('stroke', 'black');
-};
-
-// CSV Data: Only work at localhost
-// d3.csv('src/data/1.csv', d => {
-//   return {
-//     technology: d.technology,
-//     count: +d.count
-//   };
-// }).then(data => {
-//   console.log(data.length); // => 33
-//   console.log(d3.max(data, d => d.count)); // => 1078
-//   console.log(d3.min(data, d => d.count)); // => 20
-//   console.log(d3.extent(data, d => d.count)); // => [20, 1078]
- 
-//   data.sort((a, b) => b.count - a.count);
- 
-//   createViz(data);
-// });
-
-// JSON data
+const script = `// JSON data
 const data = [
-  {
-    "technology": "ArcGIS",
-    "count": 147
-  },
   {
     "technology": "D3.js",
     "count": 414
-  },
-  {
-    "technology": "Angular",
-    "count": 20
-  },
-  {
-    "technology": "Datawrapper",
-    "count": 171
   },
   {
     "technology": "Excel",
     "count": 1078
   },
   {
-    "technology": "Flourish",
-    "count": 198
-  },
-  {
-    "technology": "ggplot2",
-    "count": 435
-  },
-  {
-    "technology": "Gephi",
-    "count": 71
-  },
-  {
-    "technology": "Google Data Studio",
-    "count": 176
-  },
-  {
     "technology": "Highcharts",
     "count": 58
   },
   {
-    "technology": "Illustrator",
-    "count": 426
-  },
-  {
-    "technology": "Java",
-    "count": 29
-  },
-  {
-    "technology": "Leaflet",
-    "count": 134
-  },
-  {
-    "technology": "Mapbox",
-    "count": 167
-  },
-  {
-    "technology": "kepler.gl",
-    "count": 24
-  },
-  {
-    "technology": "Observable",
-    "count": 157
-  },
-  {
-    "technology": "Plotly",
-    "count": 223
-  },
-  {
     "technology": "Power BI",
     "count": 460
-  },
-  {
-    "technology": "PowerPoint",
-    "count": 681
-  },
-  {
-    "technology": "Python",
-    "count": 530
-  },
-  {
-    "technology": "QGIS",
-    "count": 193
-  },
-  {
-    "technology": "Qlik",
-    "count": 61
-  },
-  {
-    "technology": "R",
-    "count": 561
-  },
-  {
-    "technology": "React",
-    "count": 145
   },
   {
     "technology": "Tableau",
@@ -183,42 +28,85 @@ const data = [
     "technology": "Vega",
     "count": 48
   },
-  {
-    "technology": "Vue",
-    "count": 51
-  },
-  {
-    "technology": "Web Components",
-    "count": 79
-  },
-  {
-    "technology": "WebGL",
-    "count": 65
-  },
-  {
-    "technology": "Pen & paper",
-    "count": 522
-  },
-  {
-    "technology": "Physical materials",
-    "count": 69
-  },
-  {
-    "technology": "Canvas",
-    "count": 121
-  },
-  {
-    "technology": "P5/Processing",
-    "count": 55
-  }
 ]
 
-console.log(data.length); // => 33
-console.log(d3.max(data, d => d.count)); // => 1078
-console.log(d3.min(data, d => d.count)); // => 20
-console.log(d3.extent(data, d => d.count)); // => [20, 1078]
+const sortedData = data.sort((a, b) => b.count - a.count);
+
+const createViz = (myData) => {
+  // Declare the constants
+  const svgWidth = 600;
+  const svgHeight = 400;
+  const margin = {
+    top: 40,
+    bottom: 40,
+    left: 60,
+    right: 40,
+  }
+  const innerWidth = svgWidth - margin.left - margin.right;
+  const innerHeight = svgHeight - margin.top - margin.bottom;
+  const defaultColor = '#39B5E0';
+
+  // Select the DOM container
+  const selection = d3.select('.d3-content');
+  const svg = selection
+    .append('svg')
+    .attr('viewBox', \`0 0 \${svgWidth} \${svgHeight}\`);
+
+  // Define the scale functions
+  const xScale = d3.scaleLinear()
+    .domain(d3.extent(myData, d => d.count))
+    .range([0, innerWidth]);
+  const yScale = d3.scaleBand()
+    .domain(myData.map(d => d.technology))
+    .range([0, innerHeight])
+    .paddingInner(0.2);
+
+  // Declare the bar and label selection
+  const barAndLabel = svg
+    .selectAll('g')
+      .data(myData)
+      .join('g')
+      .attr('transform', d => \`translate(0, \${yScale(d.technology) + margin.top })\`);
+
+  // Append the rects (the bars)
+  barAndLabel
+    .append("rect")
+      .attr("width", d => xScale(d.count))
+      .attr("height", yScale.bandwidth())
+      .attr("x", margin.left)
+      .attr("y", 0)
+      .attr("fill", d => d.technology === 'D3.js' ? 'yellowgreen': defaultColor);
+
+  // Append the technology name
+  barAndLabel
+    .append('text')
+      .text(d => d.technology)
+      .attr('x', margin.left - 4)
+      .attr('y', 24)
+      .attr('text-anchor', 'end')
+      .style('font-family', 'sans-serif')
+      .style('font-size', '11px');
+
+  // Append the count text
+  barAndLabel
+    .append('text')
+      .text(d => d.count)
+      .attr('x', d => margin.left + xScale(d.count) + 4)
+      .attr('y', 12)
+      .style('font-family', 'sans-serif')
+      .style('font-size', '9px');
+
+  svg
+    .append('line')
+      .attr('x1', margin.left)
+      .attr('y1', margin.top)
+      .attr('x2', margin.left)
+      .attr('y2', svgHeight - margin.bottom)
+      .attr('stroke', 'black');
+};
+
 data.sort((a, b) => b.count - a.count);
-createViz(data);
+createViz(sortedData);
 `;
 
 export const barChart : Preset = {
