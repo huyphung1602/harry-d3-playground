@@ -7,7 +7,7 @@ import { transition } from './transition';
 import { dataBinding } from './dataBinding';
 import { barChart } from './barChart';
 import { barChartWithTransition } from './barChartWithTransition';
-import { convertToLineChart } from './convertToLineChart';
+import { lineChart } from './lineChart';
 
 export const presets : Preset[] = [
   baseSvg,
@@ -18,5 +18,5 @@ export const presets : Preset[] = [
   dataBinding,
   barChart,
   barChartWithTransition,
-  convertToLineChart,
+  lineChart,
 ];

@@ -138,8 +138,8 @@ console.log(d3.extent(data, d => d.count)); // => [20, 1078]
 data.sort((a, b) => b.count - a.count);
 createViz(data);
 `
-export const convertToLineChart : Preset = {
-  name: 'Convert To Line Chart',
+export const lineChart : Preset = {
+  name: 'Line Chart',
   html,
   script,
 }
