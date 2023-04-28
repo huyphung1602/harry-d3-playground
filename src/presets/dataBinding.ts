@@ -1,10 +1,9 @@
 import { Preset } from '../types/preset';
 
 const html = '';
-const script = `
-// Create svg
-const svgWidth = 900;
-const svgHeight = 900;
+const script = `// Create svg
+const svgWidth = 600;
+const svgHeight = 400;
 const margin = {
   top: 20,
   bottom: 40,
@@ -18,28 +17,28 @@ const svg = selection
   .append('svg')
   .attr('viewBox', \`0 0 \${svgWidth} \${svgHeight}\`);
 
-const data = [40, 10, 20, 60, 30];
-const numberOfCircles = data.length;
+const data = [100, 88, 69, 20];
 
-// Scale the circle position x
+// Scale to define the width of the rects
 const xScale = d3
   .scaleLinear()
-  .domain([0, numberOfCircles])
-  .range([0, width]);
-
-// Scale the r of the circle
-const yScale = d3
-  .scaleLinear()
   .domain(d3.extent(data))
-  .range([10, width/(2*5)]);
+  .range([20, width]);
+
+// Scale to locate the position of the rects
+const yScale = d3
+  .scaleBand()
+  .domain(data)
+  .range([margin.top, height]);
 
 svg
-  .selectAll('circle')
+  .selectAll('rect')
   .data(data)
-  .join('circle')
-  .attr('cx', (d, i) => xScale(i + 0.5))
-  .attr('cy', width/2)
-  .attr('r', (d) => yScale(d))
+  .join('rect')
+  .attr('width', d => xScale(d))
+  .attr('height', yScale.bandwidth()- 20)
+  .attr('x', margin.left)
+  .attr('transform', d => \`translate(0, \${yScale(d)})\`)
   .style('fill', 'orange');
 `
 
