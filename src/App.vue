@@ -1,6 +1,7 @@
 <template>
   <div class="px-16 md:px-12 sm:px-8 md:py-10 h-screen">
-    <p class="text-2xl py-4">Huy Phung's D3 Playground</p>
+    <p class="text-2xl pt-4">D3 Playground</p>
+    <p class="text-xl pt-1 pb-2">Made by huy.phung@holistics.io</p>
     <div class="flex justify-between">
       <div>
         <button
