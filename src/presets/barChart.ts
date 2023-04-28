@@ -37,8 +37,8 @@ const createViz = (myData) => {
   const svgWidth = 600;
   const svgHeight = 400;
   const margin = {
-    top: 40,
-    bottom: 40,
+    top: 50,
+    bottom: 60,
     left: 60,
     right: 40,
   }
@@ -52,57 +52,77 @@ const createViz = (myData) => {
     .append('svg')
     .attr('viewBox', \`0 0 \${svgWidth} \${svgHeight}\`);
 
+  // Draw the inner chart container
+  const innerChart = svg
+    .append("g")
+    .attr("transform", \`translate(\${margin.left}, \${margin.top})\`);
+
   // Define the scale functions
   const xScale = d3.scaleLinear()
     .domain(d3.extent(myData, d => d.count))
-    .range([0, innerWidth]);
+    .range([0, innerWidth])
+    .nice();
   const yScale = d3.scaleBand()
     .domain(myData.map(d => d.technology))
     .range([0, innerHeight])
     .paddingInner(0.2);
 
+  // Appending the axes
+  const bottomAxis = d3.axisBottom(xScale);
+  innerChart
+    .append("g")
+      .attr("class", "axis-x")
+      .attr("transform", \`translate(0, \${innerHeight})\`)
+      .call(bottomAxis);
+
+  const leftAxis = d3.axisLeft(yScale);
+  const chartLeftAxis = innerChart
+    .append("g")
+      .attr("class", "axis-y")
+      .call(leftAxis);
+  chartLeftAxis.selectAll("path").attr("fill", "none");
+
+  const graph = innerChart.append('g');
+
   // Declare the bar and label selection
-  const barAndLabel = svg
+  const barAndLabel = graph
     .selectAll('g')
       .data(myData)
       .join('g')
-      .attr('transform', d => \`translate(0, \${yScale(d.technology) + margin.top })\`);
+      .attr('transform', d => \`translate(0, \${yScale(d.technology)})\`);
 
   // Append the rects (the bars)
   barAndLabel
     .append("rect")
       .attr("width", d => xScale(d.count))
       .attr("height", yScale.bandwidth())
-      .attr("x", margin.left)
-      .attr("y", 0)
       .attr("fill", d => d.technology === 'D3.js' ? 'yellowgreen': defaultColor);
 
-  // Append the technology name
-  barAndLabel
-    .append('text')
-      .text(d => d.technology)
-      .attr('x', margin.left - 4)
-      .attr('y', 24)
-      .attr('text-anchor', 'end')
-      .style('font-family', 'sans-serif')
-      .style('font-size', '11px');
+    // Add x-axis text
+    svg
+      .append("text")
+      .text("Number of practitioners")
+      .attr("y", svgHeight - margin.bottom + 40)
+      .attr('x', svgWidth/2 - 50)
+      .style("font-family", "Arial, sans-serif")
+      .style("font-size", "12px");
 
   // Append the count text
   barAndLabel
     .append('text')
       .text(d => d.count)
-      .attr('x', d => margin.left + xScale(d.count) + 4)
-      .attr('y', 12)
+      .attr('x', d => xScale(d.count) + 4)
+      .attr('y', 24)
       .style('font-family', 'sans-serif')
       .style('font-size', '9px');
 
+  // Append the chart title
   svg
-    .append('line')
-      .attr('x1', margin.left)
-      .attr('y1', margin.top)
-      .attr('x2', margin.left)
-      .attr('y2', svgHeight - margin.bottom)
-      .attr('stroke', 'black');
+    .append("text")
+    .text("Most popular technologies among data visualization practitioners")
+    .attr("y", margin.top -20)
+    .style("font-family", "Arial, sans-serif")
+    .style("font-size", "16px");
 };
 
 data.sort((a, b) => b.count - a.count);
