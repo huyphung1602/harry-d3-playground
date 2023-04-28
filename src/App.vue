@@ -65,14 +65,14 @@
       <div class="flex-auto w-32">
         <MonacoEditor
           v-if="editorType === 'javascript'"
-          theme="nightOwl"
+          theme="vs"
           :options="options"
           language="javascript"
           v-model:value="monacoScript"
         />
         <MonacoEditor
           v-else
-          theme="nightOwl"
+          theme="vs"
           :options="options"
           language="html"
           v-model:value="monacoHtml"
