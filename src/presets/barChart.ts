@@ -35,9 +35,9 @@ const sortedData = data.sort((a, b) => b.count - a.count);
 const createViz = (myData) => {
   // Declare the constants
   const svgWidth = 600;
-  const svgHeight = 400;
+  const svgHeight = 450;
   const margin = {
-    top: 50,
+    top: 60,
     bottom: 60,
     left: 60,
     right: 40,
@@ -98,14 +98,23 @@ const createViz = (myData) => {
       .attr("height", yScale.bandwidth())
       .attr("fill", d => d.technology === 'D3.js' ? 'yellowgreen': defaultColor);
 
-    // Add x-axis text
-    svg
-      .append("text")
-      .text("Number of practitioners")
-      .attr("y", svgHeight - margin.bottom + 40)
-      .attr('x', svgWidth/2 - 50)
-      .style("font-family", "Arial, sans-serif")
-      .style("font-size", "12px");
+  // Add x-axis text
+  svg
+    .append("text")
+    .text("Number of practitioners")
+    .attr("y", svgHeight - margin.bottom + 40)
+    .attr('x', svgWidth/2 - 50)
+    .style("font-family", "Arial, sans-serif")
+    .style("font-size", "12px");
+
+  // Add y-axis text
+  svg
+    .append("text")
+    .text("Technologies")
+    .attr("y", margin.top - 10)
+    .style("font-family", "Arial, sans-serif")
+    .style("font-size", "12px");
+
 
   // Append the count text
   barAndLabel
@@ -120,7 +129,7 @@ const createViz = (myData) => {
   svg
     .append("text")
     .text("Most popular technologies among data visualization practitioners")
-    .attr("y", margin.top -20)
+    .attr("y", margin.top - 40)
     .style("font-family", "Arial, sans-serif")
     .style("font-size", "16px");
 };
