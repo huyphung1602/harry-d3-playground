@@ -1,7 +1,6 @@
 import { Preset } from '../types/preset';
 
 const html = '';
-
 const script = `// JSON data
 const data = [
   {
@@ -58,14 +57,14 @@ const createViz = (myData) => {
     .attr("transform", \`translate(\${margin.left}, \${margin.top})\`);
 
   // Define the scale functions
-  const xScale = d3.scaleLinear()
+  const yScale = d3.scaleLinear()
     .domain(d3.extent(myData, d => d.count))
-    .range([0, innerWidth])
+    .range([innerHeight, 0])
     .nice();
-  const yScale = d3.scaleBand()
+
+  const xScale = d3.scaleBand()
     .domain(myData.map(d => d.technology))
-    .range([0, innerHeight])
-    .paddingInner(0.2);
+    .range([0, innerWidth]);
 
   // Appending the axes
   const bottomAxis = d3.axisBottom(xScale);
@@ -78,31 +77,29 @@ const createViz = (myData) => {
   const leftAxis = d3.axisLeft(yScale);
   innerChart
     .append("g")
-      .attr("class", "axis-y")
-      .call(leftAxis)
-  d3.selectAll('.axis-y .tick line')
-    .attr('stroke', 'white')
+    .attr("class", "axis-y")
+    .call(leftAxis);
 
   const graph = innerChart.append('g');
-
-  // Declare the bar and label selection
-  const barAndLabel = graph
+  const columnAndLabel = graph
     .selectAll('g')
       .data(myData)
       .join('g')
-      .attr('transform', d => \`translate(0, \${yScale(d.technology)})\`);
+      .attr('transform', d => \`translate(\${xScale(d.technology)}, \${yScale(d.count)})\`);
 
   // Append the rects (the bars)
-  barAndLabel
-    .append("rect")
-      .attr("width", d => xScale(d.count))
-      .attr("height", yScale.bandwidth())
-      .attr("fill", d => d.technology === 'D3.js' ? 'yellowgreen': defaultColor);
+  columnAndLabel
+    .append('rect')
+      .attr("width", xScale.bandwidth())
+      .attr("height", d => innerHeight - yScale(d.count))
+      .attr("fill", d => d.technology === 'D3.js' ? 'yellowgreen': defaultColor)
+      .attr('stroke', 'white')
+      .attr('stroke-width', 2);
 
   // Add x-axis text
   svg
     .append("text")
-    .text("Number of practitioners")
+    .text("Technologies")
     .attr("y", svgHeight - margin.bottom + 40)
     .attr('x', svgWidth/2 - 50)
     .style("font-family", "Arial, sans-serif")
@@ -111,18 +108,17 @@ const createViz = (myData) => {
   // Add y-axis text
   svg
     .append("text")
-    .text("Technologies")
-    .attr("y", margin.top - 10)
+    .text("Number of practitioners")
+    .attr("y", margin.top - 20)
     .style("font-family", "Arial, sans-serif")
     .style("font-size", "12px");
 
-
   // Append the count text
-  barAndLabel
+  columnAndLabel
     .append('text')
       .text(d => d.count)
-      .attr('x', d => xScale(d.count) + 4)
-      .attr('y', 24)
+      .attr('x', 28)
+      .attr('y', -4)
       .style('font-family', 'sans-serif')
       .style('font-size', '9px');
 
@@ -137,10 +133,10 @@ const createViz = (myData) => {
 
 data.sort((a, b) => b.count - a.count);
 createViz(sortedData);
-`;
+`
 
-export const barChart : Preset = {
-  name: 'Bar Chart',
+export const columnChart : Preset = {
+  name: 'Column Chart',
   html,
   script,
 }
